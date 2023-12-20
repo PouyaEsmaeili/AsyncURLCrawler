@@ -25,12 +25,11 @@ import yaml
 
 async def main():
     parser = Parser(
-        delay_start=0.1,  # Delay between consecutive requests when the request is failed. 
-        max_retries=5,  # Maximum number of retries on a URL
-        request_timeout=1, # Request timeout to fetch a URL
-        user_agent="Mozilla", # User agent in HTTP request
+        delay_start=0.1, 
+        max_retries=5, 
+        request_timeout=1,
+        user_agent="Mozilla",
     )
-    # Check the table in the bottom of readme
     crawler = Crawler( 
         seed_urls=["https://pouyae.ir"],
         parser=parser,
