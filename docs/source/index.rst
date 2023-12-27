@@ -15,6 +15,7 @@ Welcome to AsyncURLCrawler's documentation!
    Usage
    AsyncURLCrawler
    Disclaimer
+   License
 
 
 Indices and tables
