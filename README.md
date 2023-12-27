@@ -2,6 +2,10 @@
 AsyncURLCrawler navigates through web pages concurrently by following hyperlinks to collect URLs.
 AsyncURLCrawler uses BFS algorithm. To make use of it check `robots.txt` of the domains first.
 
+**👉 For complete documentation read [here](docs/build/html/index.html)**
+
+---
+
 ### Install Pacakge
 
 ```commandline 
@@ -56,26 +60,26 @@ if __name__ == "__main__":
 👉 For more details check [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/).
 
 ```commandline 
-   1. python3 -m build
+   python3 -m build
    ```
 
 ```commandline
-    2. python3 -m twine upload --repository pypi dist/*
+    python3 -m twine upload --repository pypi dist/*
    ```
 ---
 
 ### Run with Docker 🐳
 
 ```commandline 
-   1. docker build -t crawler .
+   docker build -t crawler .
    ```
 
 ```commandline
-    2. docker run -v my_dir:/src/output --name crawler crawler
+    docker run -v my_dir:/src/output --name crawler crawler
    ```
 
 After execution of the image, 
-the resulting output file will be accessible in the directory named "my_dir" as defined in 2.
+the resulting output file will be accessible in the directory named "my_dir" as defined in the above.
 To change the output path check the volume in Dockerfile.
 
 To customize the script as your needs, there is `cmd.py` file, which accepts various arguments for configuring the crawler:
@@ -90,10 +94,30 @@ To customize the script as your needs, there is `cmd.py` file, which accepts var
 
 ---
 
+### Run Documentation with Sphinx
+
+Install packages listed in `doc-requirements.txt`. 
+After the installation follow the commands below:
+
+```commandline
+cd docs
+```
+
+```commandline
+make clean
+```
+
+```commandline
+make html
+```
+
+HTML files will be generated in `docs/build`
+
+---
+
 ### TODO List
 
 - Add unit tests.
-- Make documentation better
 
 ### Disclaimer
 
