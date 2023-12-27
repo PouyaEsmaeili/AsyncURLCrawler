@@ -1,4 +1,4 @@
-Usage
+License
 =============
 
 MIT License
