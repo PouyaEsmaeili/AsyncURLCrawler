@@ -2,7 +2,7 @@
 AsyncURLCrawler navigates through web pages concurrently by following hyperlinks to collect URLs.
 AsyncURLCrawler uses BFS algorithm. To make use of it check `robots.txt` of the domains first.
 
-**👉 For complete documentation read [here](docs/build/html/index.html)**
+**👉 For complete documentation read [here](https://asyncurlcrawlerdocs.pages.dev/)**
 
 ---
 
