@@ -94,7 +94,7 @@ To customize the script as your needs, there is `cmd.py` file, which accepts var
 
 ---
 
-### Run Documentation with Sphinx
+### Build Documentation with Sphinx
 
 Install packages listed in `doc-requirements.txt`.
 
