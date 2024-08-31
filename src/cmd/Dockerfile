@@ -1,7 +1,7 @@
 FROM python:3.9-slim
 WORKDIR /src
 COPY ./cmd.py /src
-COPY ./config.py.py /src
+COPY ./config.py /src
 COPY ./config.yaml /src
 RUN pip install AsyncURLCrawler
 VOLUME /src/output

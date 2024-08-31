@@ -11,10 +11,10 @@ class Parser:
     Implements exponential backoff for retrying failed requests.
 
     Args:
-        delay_start (float, optional): Initial delay in the exponential backoff strategy. Defaults to 0.1 seconds.
-        max_retries (int, optional): Maximum number of retry attempts. Defaults to 5.
-        request_timeout (float, optional): Timeout for each HTTP request in seconds. Defaults to 1 second.
-        user_agent (str, optional): User-Agent string for HTTP request headers. Defaults to 'Mozilla/5.0'.
+        :delay_start (float, optional): Initial delay in the exponential backoff strategy. Defaults to 0.1 seconds.
+        :max_retries (int, optional): Maximum number of retry attempts. Defaults to 5.
+        :request_timeout (float, optional): Timeout for each HTTP request in seconds. Defaults to 1 second.
+        :user_agent (str, optional): User-Agent string for HTTP request headers. Defaults to 'Mozilla/5.0'.
     """
     def __init__(
             self,
@@ -43,7 +43,7 @@ class Parser:
         Asynchronously fetches a URL with specified headers and timeout.
 
         Args:
-            url (str): The URL to fetch.
+        :url (str): The URL to fetch.
 
         Returns:
             Response or None: The HTTP response if successful, otherwise None if timed out.
@@ -65,8 +65,8 @@ class Parser:
         Extracts and normalizes URLs from <a> tags in the HTML content.
 
         Args:
-            response (str): The HTML content of the fetched page.
-            base_url (str): The base URL for converting relative URLs to absolute.
+            :response (str): The HTML content of the fetched page.
+            :base_url (str): The base URL for converting relative URLs to absolute.
 
         Returns:
             List[str]: A list of validated absolute URLs.
@@ -84,7 +84,7 @@ class Parser:
         Fetches a URL and extracts URLs using an exponential backoff strategy on failures.
 
         Args:
-            url (str): The URL to probe.
+            :url (str): The URL to probe.
 
         Returns:
             List[str]: A list of extracted URLs. Returns an empty list if the fetch fails after retries.

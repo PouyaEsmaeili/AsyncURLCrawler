@@ -17,7 +17,7 @@ class InvalidURL(Exception):
     Raised when a URL does not match the expected pattern.
 
     Args:
-        url (str): The invalid URL.
+        :url (str): The invalid URL.
 
     Attributes:
         message (str): Explanation of the error.
@@ -32,7 +32,7 @@ def validate_urls(urls: List[str]) -> None:
     Validates a list of URLs against a predefined regex pattern.
 
     Args:
-        urls (List[str]): A list of URLs to validate.
+        :urls (List[str]): A list of URLs to validate.
 
     Raises:
         InvalidURL: If any URL does not match the pattern.
@@ -48,7 +48,7 @@ def validate_url(url: str) -> bool:
     Validates a single URL against a predefined regex pattern.
 
     Args:
-        url (str): The URL to validate.
+        :url (str): The URL to validate.
 
     Returns:
         bool: True if the URL matches the pattern, otherwise False.
@@ -65,8 +65,8 @@ def normalize_url(url: str, base_url: str) -> str:
     Converts a relative URL to an absolute URL based on a base URL.
 
     Args:
-        url (str): The URL to normalize, which may be relative.
-        base_url (str): The base URL to resolve relative URLs against.
+        :url (str): The URL to normalize, which may be relative.
+        :base_url (str): The base URL to resolve relative URLs against.
 
     Returns:
         str: The absolute URL.
@@ -84,8 +84,8 @@ def have_exact_subdomain(url1: str, url2: str) -> bool:
     Checks if two URLs share the same subdomain.
 
     Args:
-        url1 (str): The first URL.
-        url2 (str): The second URL.
+        :url1 (str): The first URL.
+        :url2 (str): The second URL.
 
     Returns:
         bool: True if both URLs have the same subdomain, domain, and suffix.
@@ -101,8 +101,8 @@ def have_exact_domain(url1: str, url2: str) -> bool:
     Checks if two URLs share the exact same domain.
 
     Args:
-        url1 (str): The first URL.
-        url2 (str): The second URL.
+        :url1 (str): The first URL.
+        :url2 (str): The second URL.
 
     Returns:
         bool: True if both URLs have the exact same domain including subdomains.

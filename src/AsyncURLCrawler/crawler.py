@@ -11,14 +11,14 @@ import asyncio
 
 class Crawler:
     """
-    Crawler that extracts URLs from target websites using a Breadth-First Search (BFS) algorithm.
+    Extracts URLs from target websites using a Breadth-First Search (BFS) algorithm.
 
     Args:
-        seed_urls (List[str]): Initial URLs to start crawling. Must follow a valid URL pattern, e.g., 'https://example.com'.
-        parser (Parser): Instance of the Parser class, responsible for fetching and extracting URLs from a given URL.
-        deep (bool, optional): If True, crawls all discovered URLs recursively. Defaults to False. Not recommended due to high resource usage.
-        exact (bool, optional): If True, restricts crawling to URLs with the same subdomain as the seed URL. Ignored if 'deep' is True. Defaults to True.
-        delay (float, optional): Time delay (in seconds) between requests to prevent overwhelming the target server. Defaults to 0.
+        :seed_urls (List[str]): Initial URLs to start crawling. Must follow a valid URL pattern, e.g., 'https://example.com'.
+        :parser (Parser): Instance of the Parser class, responsible for fetching and extracting URLs from a given URL.
+        :deep (bool, optional): If True, crawls all discovered URLs recursively. Defaults to False. Not recommended due to high resource usage.
+        :exact (bool, optional): If True, restricts crawling to URLs with the same subdomain as the seed URL. Ignored if 'deep' is True. Defaults to True.
+        :delay (float, optional): Time delay (in seconds) between requests to prevent overwhelming the target server. Defaults to 0.
     """
 
     def __init__(
