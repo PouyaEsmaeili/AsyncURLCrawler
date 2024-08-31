@@ -11,12 +11,12 @@
 ### Install Pacakge
 
 ```commandline 
-   pip install AsyncURLCrawler
-   ```
+pip install AsyncURLCrawler
+```
 
 ```commandline 
-   pip install AsyncURLCrawler==<version>
-   ```
+pip install AsyncURLCrawler==<version>
+```
 
 👉 The official [page](https://pypi.org/project/AsyncURLCrawler) of the project in PyPi.
 
@@ -110,12 +110,12 @@ The script can be customized using the `src/cmd/cmd.py` file, which accepts vari
 There is a Dockerfile in `src/cmd` to run the above-mentioned cmd tool in a docker container.
 
 ```commandline 
-   docker build -t crawler .
-   ```
+docker build -t crawler .
+```
 
 ```commandline
-    docker run -v my_dir:/src/output --name crawler crawler
-   ```
+docker run -v my_dir:/src/output --name crawler crawler
+```
 
 After execution of the container, 
 the resulting output file will be accessible in the directory named `my_dir` as defined in the above.
@@ -125,15 +125,26 @@ To configure the tool based on your needs check the `CMD` in `Dockerfile`.
 
 ### Build and Publish to Python Package Index(PyPi)
 
-👉 For more details check [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/).
-
-```commandline 
-   python3 -m build
-   ```
+Requirements:
 
 ```commandline
-    python3 -m twine upload --repository pypi dist/*
-   ```
+python3 -m pip install --upgrade build
+```
+
+```commandline
+python3 -m pip install --upgrade twine
+```
+👉 For more details check [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/).
+
+Build and upload:
+
+```commandline 
+python3 -m build
+```
+
+```commandline
+python3 -m twine upload --repository pypi dist/*
+```
 
 ---
 
@@ -161,12 +172,25 @@ HTML files will be generated in `docs/build`. Push them the repository and deplo
 
 ---
 
+### Workflow
+
+- Branch off, implement features and merge them to `main`. Remove feature branches.
+- Update version in `pyproject.toml` and push to `main`.
+- Add release tag in [Github](https://github.com/PouyaEsmaeili/AsyncURLCrawler/releases).
+- Build and push the package to [PyPi](https://pypi.org/project/AsyncURLCrawler/). 
+- Build documentation and push HTML files to [AsyncURLCrawlerDocs repo](https://github.com/PouyaEsmaeili/AsyncURLCrawlerDocs)
+- Documentation will be deployed on [pages.dev](https://asyncurlcrawlerdocs.pages.dev/) automatically.
+
+---
+
+### Contact
+
+**[Find me @ My Homepage](https://pouyae.ir)**
+
+---
+
 ### Disclaimer
 
 **⚠️ Use at your own risk. The author and contributors are not responsible for any misuse or consequences resulting from the use of this project.**
 
 --- 
-
-### Contact
-
-**[My Homepage](https://pouyae.ir)**
