@@ -11,19 +11,24 @@ import asyncio
 
 class Crawler:
     """
-    This module extracts URLs from the targets by using Breadth First Search algorithm.
+    Crawler that extracts URLs from target websites using a Breadth-First Search (BFS) algorithm.
 
-    :param seed_urls: List of target URLs to crawl. Valid URL pattern is: https://pouyae.ir
-    :param parser: An instance of Parser class. Parser object fetches the URL and returns extracted URLs.
-    :param deep: If set, crawls all visited URLs, although this is not recommended due to its resource-intensive nature. Alternatively, it crawls URLs that share the same base domain as the seed URL.
-    :param exact: If set, crawls URLs that share the exact subdomain as the seed URL. If deep is set, exact is ignored.
-    :param delay: The delay between each URL crawl. It is used to adjust request per seconds and avoid denial of service on seed URLs.
+    Args:
+        seed_urls (List[str]): Initial URLs to start crawling. Must follow a valid URL pattern, e.g., 'https://example.com'.
+        parser (Parser): Instance of the Parser class, responsible for fetching and extracting URLs from a given URL.
+        deep (bool, optional): If True, crawls all discovered URLs recursively. Defaults to False. Not recommended due to high resource usage.
+        exact (bool, optional): If True, restricts crawling to URLs with the same subdomain as the seed URL. Ignored if 'deep' is True. Defaults to True.
+        delay (float, optional): Time delay (in seconds) between requests to prevent overwhelming the target server. Defaults to 0.
     """
-    def __init__(self, seed_urls: List[str],
-                 parser: Parser,
-                 deep: bool = False,
-                 exact: bool = True,
-                 delay: float = 0):
+
+    def __init__(
+            self,
+            seed_urls: List[str],
+            parser: Parser,
+            deep: bool = False,
+            exact: bool = True,
+            delay: float = 0,
+    ):
         self._set_seed_urls(seed_urls)
         self._parser = parser
         self._deep = deep
@@ -31,11 +36,13 @@ class Crawler:
         self._delay = delay
 
     def _set_seed_urls(self, seed_urls: List[str]) -> None:
+        """Validates and sets the initial seed URLs."""
         validate_urls(seed_urls)
         self._seed_urls = seed_urls
         self._visited_urls = dict.fromkeys(seed_urls, set())
 
     def _update_queue(self, extracted_url: str, root_url: str) -> None:
+        """Updates the queue based on crawling rules."""
         if self._deep:
             self._queue.append(extracted_url)
         else:
@@ -47,12 +54,16 @@ class Crawler:
                     self._queue.append(extracted_url)
 
     def _reset_queue(self) -> None:
+        """Resets the BFS queue."""
         self._queue = deque()
 
     async def crawl(self) -> Dict:
-        """Crawls all seed URLs one by one based on BFS algorithm.
-        Returns visited URLs in a python dictionary.
-        Each key is seed URL and value is list of visited URLs for that key."""
+        """
+        Asynchronously crawls all seed URLs using BFS.
+
+        Returns:
+            Dict: A dictionary where each key is a seed URL and each value is a set of visited URLs for that seed.
+        """
         for root_url in self._seed_urls:
             self._reset_queue()
             self._queue.append(root_url)
@@ -67,10 +78,12 @@ class Crawler:
                 await asyncio.sleep(self._delay)
         return self._visited_urls
 
-    async def yielded_crawl(self):
+    async def yielded_crawl(self) -> str:
         """
-        Crawls all seed URLs one by one based on BFS algorithm.
-        Yields each visited URL. To get list of visited URLs use `get_visited_urls()`.
+        Asynchronously crawls seed URLs using BFS and yields each visited URL.
+
+        Yields:
+            str: Each URL as it is visited.
         """
         for root_url in self._seed_urls:
             self._reset_queue()
@@ -88,6 +101,10 @@ class Crawler:
         return
 
     def get_visited_urls(self) -> Dict:
-        """Returns visited URLs in a python dictionary.
-        Each key is seed URL and value is list of visited URLs for that key."""
+        """
+        Returns the visited URLs.
+
+        Returns:
+            Dict: A dictionary where each key is a seed URL and each value is a set of visited URLs for that seed.
+        """
         return self._visited_urls
