@@ -13,14 +13,30 @@ URL_REGEX = re.compile(
 
 
 class InvalidURL(Exception):
-    """InvalidURL exception. Valid URL pattern is: https://pouyae.ir"""
+    """
+    Raised when a URL does not match the expected pattern.
+
+    Args:
+        url (str): The invalid URL.
+
+    Attributes:
+        message (str): Explanation of the error.
+    """
     def __init__(self, url):
         self.message = f"{url} is invalid URL! Valid pattern is: http(s)://..."
         super().__init__(self.message)
 
 
 def validate_urls(urls: List[str]) -> None:
-    """Checks pattern for each URL."""
+    """
+    Validates a list of URLs against a predefined regex pattern.
+
+    Args:
+        urls (List[str]): A list of URLs to validate.
+
+    Raises:
+        InvalidURL: If any URL does not match the pattern.
+    """
     for url in urls:
         matched = URL_REGEX.match(url)
         if not matched:
@@ -28,7 +44,15 @@ def validate_urls(urls: List[str]) -> None:
 
 
 def validate_url(url: str) -> bool:
-    """Checks pattern for a URL."""
+    """
+    Validates a single URL against a predefined regex pattern.
+
+    Args:
+        url (str): The URL to validate.
+
+    Returns:
+        bool: True if the URL matches the pattern, otherwise False.
+    """
     matched = URL_REGEX.match(url)
     if matched:
         return True
@@ -37,7 +61,16 @@ def validate_url(url: str) -> bool:
 
 
 def normalize_url(url: str, base_url: str) -> str:
-    """Converts relative URL to absolute URL."""
+    """
+    Converts a relative URL to an absolute URL based on a base URL.
+
+    Args:
+        url (str): The URL to normalize, which may be relative.
+        base_url (str): The base URL to resolve relative URLs against.
+
+    Returns:
+        str: The absolute URL.
+    """
     url = url.strip()
     split_url = urlsplit(url)
     if not split_url.scheme and not split_url.netloc:
@@ -47,7 +80,16 @@ def normalize_url(url: str, base_url: str) -> str:
 
 
 def have_exact_subdomain(url1: str, url2: str) -> bool:
-    """Checks if two URLs have the same subdomain."""
+    """
+    Checks if two URLs share the same subdomain.
+
+    Args:
+        url1 (str): The first URL.
+        url2 (str): The second URL.
+
+    Returns:
+        bool: True if both URLs have the same subdomain, domain, and suffix.
+    """
     extract_url1 = tldextract.extract(url1)
     extract_url2 = tldextract.extract(url2)
     return extract_url1.domain == extract_url2.domain and\
@@ -55,7 +97,16 @@ def have_exact_subdomain(url1: str, url2: str) -> bool:
 
 
 def have_exact_domain(url1: str, url2: str) -> bool:
-    """Checks if two URLs have the same domain."""
+    """
+    Checks if two URLs share the exact same domain.
+
+    Args:
+        url1 (str): The first URL.
+        url2 (str): The second URL.
+
+    Returns:
+        bool: True if both URLs have the exact same domain including subdomains.
+    """
     split_url1 = urlsplit(url1)
     split_url2 = urlsplit(url2)
     return split_url1.netloc == split_url2.netloc

@@ -7,20 +7,22 @@ from AsyncURLCrawler.url_utils import normalize_url, validate_url
 
 class Parser:
     """
-    This module retrieve a URL, parses its HTML content, and extract URLs from <a> tags.
-    If HTTP request fails, the subsequent request is not sent immediately;
-    instead, it waits for a specified duration and then retries.
-    The delay between consecutive unsuccessful requests increases exponentially with each attempt.
-    Additionally, there is a predefined limit on the number of retries.
-    This retry approach is known as exponential backoff.
+    Fetches a URL, parses its HTML content, and extracts URLs from <a> tags.
+    Implements exponential backoff for retrying failed requests.
 
-    :param delay_start: Indicates the initial value of delay in exponential backoff strategy. The default value is 0.1 seconds.
-    :param max_retries: Maximum number of retries. The default value is 5.
-    :param request_timeout: HTTP request timeout in seconds. The default value is 1 seconds.
-    :param user_agent: User Agent in HTTP request header. The default value is Mozilla/5.0.
+    Args:
+        delay_start (float, optional): Initial delay in the exponential backoff strategy. Defaults to 0.1 seconds.
+        max_retries (int, optional): Maximum number of retry attempts. Defaults to 5.
+        request_timeout (float, optional): Timeout for each HTTP request in seconds. Defaults to 1 second.
+        user_agent (str, optional): User-Agent string for HTTP request headers. Defaults to 'Mozilla/5.0'.
     """
-    def __init__(self, delay_start: float = 0.1, max_retries: int = 5,
-                 request_timeout: float = 1, user_agent: str = 'Mozilla/5.0'):
+    def __init__(
+            self,
+            delay_start: float = 0.1,
+            max_retries: int = 5,
+            request_timeout: float = 1,
+            user_agent: str = 'Mozilla/5.0',
+    ):
         self._delay_start = delay_start
         self._current_delay = delay_start
         self._max_retries = max_retries
@@ -30,16 +32,21 @@ class Parser:
 
     def reset(self):
         """
-        Resets exponential backoff internal state for each URL.
-        It is necessary to call this method before fetching a new URL.
+        Resets the backoff state for a new URL fetch attempt.
+        Must be called before each new URL fetch.
         """
         self._current_retry = 0
         self._current_delay = self._delay_start
 
     async def _fetch_page(self, url: str) -> [Response, None]:
         """
-        This method fetches a URL, sets user agent header and timeout for each HTTP request.
-        The request is executed asynchronously.
+        Asynchronously fetches a URL with specified headers and timeout.
+
+        Args:
+            url (str): The URL to fetch.
+
+        Returns:
+            Response or None: The HTTP response if successful, otherwise None if timed out.
         """
         # TODO Check file format before fetching! ignore jpg, pdf, ...
         async with AsyncClient() as client:
@@ -55,9 +62,14 @@ class Parser:
 
     def _extract_urls(self, response: str, base_url: str) -> List[str]:
         """
-        Extracts URLs from <a> tag.
-        Checks if a URL is valid and returns list of absolute URLs.
-        Relative URLs are converted to absolute URLs by having base_url.
+        Extracts and normalizes URLs from <a> tags in the HTML content.
+
+        Args:
+            response (str): The HTML content of the fetched page.
+            base_url (str): The base URL for converting relative URLs to absolute.
+
+        Returns:
+            List[str]: A list of validated absolute URLs.
         """
         soup = BeautifulSoup(response, 'html.parser')
         urls = list()
@@ -69,9 +81,13 @@ class Parser:
 
     async def probe(self, url: str) -> List[str]:
         """
-        Probe fetches a URL by calling `_fetch_page()` and passes the content to `_extract_urls().`
-        Exponential backoff strategy is handled in this method.
-        If the status code in response is not 2xx or the request is timed-out it is considered failed request.
+        Fetches a URL and extracts URLs using an exponential backoff strategy on failures.
+
+        Args:
+            url (str): The URL to probe.
+
+        Returns:
+            List[str]: A list of extracted URLs. Returns an empty list if the fetch fails after retries.
         """
         # TODO Check response size!
         response = await self._fetch_page(url)
